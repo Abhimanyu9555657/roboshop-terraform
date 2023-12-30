@@ -1,6 +1,3 @@
-default:
-	echo None
-
 dev:
 	rm -rf .terraform
 	terraform init -backend-config=env-dev/state.tfvars
