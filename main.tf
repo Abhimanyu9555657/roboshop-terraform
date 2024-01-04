@@ -29,6 +29,7 @@ module "docdb" {
   source                     = "git::https://github.com/Abhimanyu9555657/tf-module-docdb.git"
   tags                       = var.tags
   env                        = var.env
+
   for_each                   = var.docdb
   subnet_ids                 = local.db_subnets
   backup_retention_period    = each.value["backup_retention_period"]
