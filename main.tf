@@ -64,7 +64,7 @@ module "rds" {
   preferred_backup_window = each.value["preferred_backup_window"]
   skip_final_snapshot     = each.value["skip_final_snapshot"]
   instance_count          = each.value["instance_count"]
-  instance_class          = each.value["instance_class "]
+  instance_class          = each.value["instance_class"]
 }
 
 module "elasticache" {
