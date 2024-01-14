@@ -85,18 +85,35 @@ module "elasticache" {
   engine_version   = each.value["engine_version"]
 }
 
-module "rabbitmq" {
-  source  = "git::https://github.com/Abhimanyu9555657/tf-module-rabbitmq.git"
-  tags    = var.tags
-  env     = var.env
-  zone_id = var.zone_id
+#module "rabbitmq" {
+# source  = "git::https://github.com/Abhimanyu9555657/tf-module-rabbitmq.git"
+#  tags    = var.tags
+#  env     = var.env
+#  zone_id = var.zone_id
 
-  for_each = var.rabbitmq
+#  for_each = var.rabbitmq
 
-  subnet_ids       = local.db_subnets
-  vpc_id           = local.vpc_id
-  sg_ingress_cidr  = local.app_subnets_cidr
-  instance_type    = each.value["instance_type"]
+#  subnet_ids       = local.db_subnets
+#  vpc_id           = local.vpc_id
+#  sg_ingress_cidr  = local.app_subnets_cidr
+#  instance_type    = each.value["instance_type"]
+#  ssh_ingress_cidr = var.ssh_ingress_cidr
+#  kms_key_id       = var.kms_key_id
+#}
+
+module "app" {
+  source = "git::https://github.com/Abhimanyu9555657/tf-module-app.git"
+
+  tags             = var.tags
+  env              = var.env
+  zone_id          = var.zone_id
   ssh_ingress_cidr = var.ssh_ingress_cidr
-  kms_key_id       = var.kms_key_id
+
+  for_each  = var.apps
+  component = each.key
+  port      = each.value["port"]
+
+  sg_ingress_cidr  = local.app_subnets_cidr
+  vpc_id           = local.vpc_id
+  subnet_ids       = local.app_subnets
 }
