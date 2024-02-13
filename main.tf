@@ -112,7 +112,7 @@ module "app" {
   max_size         = each.value["max_size"]
   min_size         = each.value["min_size"]
   sg_ingress_cidr  = local.app_subnets
-  vps_id           = local.vpc_id
+  vpc_id           = local.vpc_id
   subnet_ids       = local.app_subnets
 }
 
